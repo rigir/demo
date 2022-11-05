@@ -25,6 +25,11 @@ tasks.named('test') {
 String imageName = "rigir/demo:$version"
 
 
+bootJar {
+    baseName = 'demo'
+    version =  '1.0.0'
+}
+
 docker {
 	name imageName
 	files "build/libs/${bootJar.archiveFileName.get()}"
