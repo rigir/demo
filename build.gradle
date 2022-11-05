@@ -22,7 +22,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-String imageName = "rigir/spring_boot_gradle:$version"
+String imageName = "rigir/demo:$version"
 
 docker {
 	name imageName
@@ -33,5 +33,6 @@ docker {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
+		vendor = JvmVendorSpec.ADOPTOPENJDK
     }
 }
