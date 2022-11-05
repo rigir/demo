@@ -24,6 +24,7 @@ tasks.named('test') {
 
 String imageName = "rigir/demo:$version"
 
+
 docker {
 	name imageName
 	files "build/libs/${bootJar.archiveFileName.get()}"
@@ -34,5 +35,7 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
 		vendor = JvmVendorSpec.ADOPTOPENJDK
+		 implementation = JvmImplementation.J9
     }
 }
+
