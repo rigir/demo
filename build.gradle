@@ -8,7 +8,6 @@ plugins {
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
-targetCompatibility = '17'
 
 repositories {
 	mavenCentral()
@@ -29,4 +28,10 @@ docker {
 	name imageName
 	files "build/libs/${bootJar.archiveFileName.get()}"
 	buildArgs([JAR_FILE: bootJar.archiveFileName.get()])
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
