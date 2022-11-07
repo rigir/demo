@@ -5,6 +5,7 @@ ENTRYPOINT ["java", "-jar", "/app.jar"]
 
 # docker run --rm -d \
 #    --name jenkins \
+#    --net host
 #    -u root \
 #    -p 8080:8080 \
 #    -v jenkins-data:/var/jenkins_home \
