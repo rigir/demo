@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                mvn 'build'
+                echo 'Deploying to Staging'
             }
         }
         stage('Deploy to Staging') {
