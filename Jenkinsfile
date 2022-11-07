@@ -4,6 +4,9 @@ pipeline {
             args '-u root:root'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
+    options {
+        skipStagesAfterUnstable()
+    }
     triggers {
         pollSCM '* * * * *'
     }
