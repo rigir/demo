@@ -1,8 +1,10 @@
 pipeline {
-    docker {
-            image 'gradle:jdk17'
-            args '-u root:root'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
+    agent {
+        docker {
+                image 'gradle:jdk17'
+                args '-u root:root'
+                args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
     }
     options {
         skipStagesAfterUnstable()
