@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    docker {
+            image 'gradle:jdk17'
+            args '-u root:root'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
     triggers {
         pollSCM '* * * * *'
     }
