@@ -74,7 +74,7 @@ public class PointControllerTest {
         final Point test_point = new Point(1,1);
         when(pointService.addPoint(test_point)).thenReturn(true);
 
-        mvc.perform(post("/add")
+        mvc.perform(post("/add/{x}/{y}")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(test_point)))
                 .andExpect(status().isOk())

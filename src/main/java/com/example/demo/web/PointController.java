@@ -36,6 +36,7 @@ public class PointController {
     public ResponseEntity<?> addPoint(@PathVariable("x") int x, @PathVariable("y") int y){
         return ResponseEntity.ok(services.addPoint(new Point(x,y)));
     }
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePoint(@PathVariable("id") int id){
         return ResponseEntity.ok(services.deletePoint(id));
