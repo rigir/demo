@@ -70,18 +70,6 @@ public class PointControllerTest {
     }
 
     @Test
-    public void addPointShouldReturnOneResult() throws Exception {
-        final Point test_point = new Point(2,7);
-        when(pointService.addPoint(test_point)).thenReturn(true);
-
-        mvc.perform(post("/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(test_point)))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
-
-    @Test
     public void deletePointShouldReturnPoint() throws Exception {
         final int number_to_test = 0;
         when(pointService.deletePoint(number_to_test)).thenReturn(new Point(1,2));
