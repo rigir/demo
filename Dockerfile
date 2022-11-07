@@ -8,6 +8,6 @@ COPY src ./src
 FROM base as build
 RUN mvn package
 
-FROM openjdk:17-jdk-slim 
+FROM openjdk:17-jdk-slim as production
 COPY --from=build /app/target/output.jar /output.jar
 CMD ["java", "-jar", "/output.jar"]

@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                mvn 'test'
+                sh 'mvn test'
             }
         }
         stage('Build') {
@@ -20,7 +20,6 @@ pipeline {
                 mvn 'build'
             }
         }
-
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to Staging'
