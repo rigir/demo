@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-                image 'maven:3.8.6-amazoncorretto-17'
+                image 'gradle:jdk17-alpine'
                 args '-u root:root'
                 args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
