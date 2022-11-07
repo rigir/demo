@@ -4,6 +4,7 @@ import com.example.demo.business.PointService;
 import com.example.demo.data.Point;
 import com.example.demo.web.PointController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

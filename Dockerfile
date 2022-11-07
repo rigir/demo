@@ -1,14 +1,30 @@
-FROM openjdk:17-jdk-slim
-ARG JAR_FILE
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+FROM maven:3-openjdk-17-slim AS base
+WORKDIR /app
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:resolve
+COPY src ./src
 
-# docker run --rm -d \
-#    --name jenkins \
-#    --net host \
-#    -u root \
-#    -v jenkins-data:/var/jenkins_home \
-#    -v /var/run/docker.sock:/var/run/docker.sock \
-#    -v "$HOME":/home \
-#    --privileged \
-#    jenkins/jenkins
+FROM base as test
+CMD ["./mvnw", "test"]
+
+FROM base as build
+RUN ./mvnw package
+
+FROM openjdk:17-jdk-slim as production
+COPY --from=build /app/target/output.jar /output.jar
+CMD ["java", "-jar", "/output.jar"]
+
+FROM maven:3-openjdk-17-slim AS base
+WORKDIR /app
+COPY .mvn/ .mvn
+COPY pom.xml ./
+RUN mvn dependency:resolve
+COPY src ./src
+
+FROM base as build
+RUN mvn package
+
+FROM openjdk:17-jdk-slim as production
+COPY --from=build /app/target/output.jar /output.jar
+CMD ["java", "-jar", "/output.jar"]
