@@ -32,7 +32,7 @@ pipeline {
         stage('Deploying to Dockerhub') {
             steps{
                 script {
-                    docker.withRegistry('https://hub.docker.com/', $DOCKERHUB_CREDENTIALS ) {
+                    docker.withRegistry('https://hub.docker.com/', DOCKERHUB_CREDENTIALS ) {
                         def customImage = docker.build registry + ":$BUILD_NUMBER"
                         customImage.push('latest')       
                         docker.image("${registry}:latest").push()
