@@ -32,7 +32,6 @@ pipeline {
         stage('Deploying to Dockerhub') {
             agent{
                 docker {
-                    
                     image 'mmiotkug/node-curl'
                     args '-p 3000:3000'
                     args '-v /var/run/docker.sock:/var/run/docker.sock'
@@ -48,13 +47,14 @@ pipeline {
                     steps{
                         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u rigir --password-stdin'
                         sh 'docker image push $registry:$BUILD_NUMBER'
+                        sh 'docker logout'
                         sh 'docker image rm $registry:$BUILD_NUMBER'
                     }
-                    post {
-                        always {
-                            sh 'docker logout'
-                        }
-                    }
+                    // post {
+                    //     always {
+                    //         sh 'docker logout'
+                    //     }
+                    // }
                 }
             }
         }
