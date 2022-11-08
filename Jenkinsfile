@@ -38,11 +38,10 @@ pipeline {
             }
         }
         stage('Deploy container') {
-             agent{
+            agent{
                 docker {
                     image 'mmiotkug/node-curl'
-                    args '-p 3000:3000'
-                    args '-w /app'
+                    args '-u root:root'
                     args '-v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
