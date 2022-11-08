@@ -29,16 +29,26 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package' 
             }
         }
+        stage('Build to Docker') {
+            // steps{
+            //     sh 'docker image build -t $registry:$BUILD_NUMBER .'
+            // }
+            dockerImage = docker.build("monishavasu/my-react-app:latest")
+        }
         stage('Deploying to Dockerhub') {
             steps{
-                script {
-                    docker.withRegistry('https://hub.docker.com/', DOCKERHUB_CREDENTIALS ) {
-                        def customImage = docker.build registry + ":$BUILD_NUMBER"
-                        customImage.push('latest')       
-                        docker.image("${registry}:latest").push()
-                    }
+                // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u rigir --password-stdin'
+                // sh 'docker image push $registry:$BUILD_NUMBER'
+                // sh "docker image rm $registry:$BUILD_NUMBER"
+                withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
+                    dockerImage.push()
                 }
             }
+            // post {
+            //     always {
+            //         sh 'docker logout'
+            //     }
+            // }
         }
     }
 }
