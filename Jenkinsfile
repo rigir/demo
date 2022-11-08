@@ -3,18 +3,18 @@ pipeline {
         registry = 'rigir/lab5_03'
         DOCKERHUB_CREDENTIALS = credentials('docker-login-pwd')
     }
-    agent {
-        docker {
-            image 'maven:3.8.6-amazoncorretto-17'
-            args '-u root:root'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
     options {
         skipStagesAfterUnstable()
     }
     stages {
         stage('Test') {
+            agent {
+                docker {
+                    image 'maven:3.8.6-amazoncorretto-17'
+                    args '-u root:root'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
              steps {
                 sh 'mvn test'
             }
@@ -25,6 +25,13 @@ pipeline {
             }
         }
         stage('Build') {
+            agent {
+                docker {
+                    image 'maven:3.8.6-amazoncorretto-17'
+                    args '-u root:root'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
                 sh 'mvn -B -DskipTests clean package' 
             }
