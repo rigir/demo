@@ -33,7 +33,9 @@ pipeline {
             // steps{
             //     sh 'docker image build -t $registry:$BUILD_NUMBER .'
             // }
-            dockerImage = docker.build("monishavasu/my-react-app:latest")
+            steps{
+                dockerImage = docker.build("monishavasu/my-react-app:latest")
+            }
         }
         stage('Deploying to Dockerhub') {
             steps{
