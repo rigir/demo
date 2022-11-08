@@ -38,24 +38,27 @@ pipeline {
             }
         }
         stage('Deploy container') {
-            agent{
-                docker {
-                    image 'mmiotkug/node-curl'
-                    args '-u root:root'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
+            steps {
+                sh 'echo true' 
             }
-            steps{
-                sh 'docker image build -t $registry:$BUILD_NUMBER .'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u rigir --password-stdin'
-                sh 'docker image push $registry:$BUILD_NUMBER'
-                sh 'docker image rm $registry:$BUILD_NUMBER'
-            }
-            post {
-                always {
-                    sh 'docker logout'
-                }
-            }
+            // agent{
+            //     docker {
+            //         image 'mmiotkug/node-curl'
+            //         args '-u root:root'
+            //         args '-v /var/run/docker.sock:/var/run/docker.sock'
+            //     }
+            // }
+            // steps{
+            //     sh 'docker image build -t $registry:$BUILD_NUMBER .'
+            //     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u rigir --password-stdin'
+            //     sh 'docker image push $registry:$BUILD_NUMBER'
+            //     sh 'docker image rm $registry:$BUILD_NUMBER'
+            // }
+            // post {
+            //     always {
+            //         sh 'docker logout'
+            //     }
+            // }
         }
     }
 }
