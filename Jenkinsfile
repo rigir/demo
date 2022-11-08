@@ -32,10 +32,10 @@ pipeline {
         stage('Deploying to Dockerhub') {
             agent{
                 docker {
-                    image 'docker'
-                    args '-u root:root'
+                    
+                    image 'mmiotkug/node-curl'
+                    args '-p 3000:3000'
                     args '-v /var/run/docker.sock:/var/run/docker.sock'
-                    args '-w /app'
                 }
             }
             stages {
