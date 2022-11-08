@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        registry = "rigir/lab5_03"
+        registry = 'rigir/lab5_03'
         DOCKERHUB_CREDENTIALS = credentials('docker-login-pwd')
     }
     agent {
@@ -48,7 +48,7 @@ pipeline {
                     steps{
                         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u rigir --password-stdin'
                         sh 'docker image push $registry:$BUILD_NUMBER'
-                        sh "docker image rm $registry:$BUILD_NUMBER"
+                        sh 'docker image rm $registry:$BUILD_NUMBER'
                     }
                     post {
                         always {
