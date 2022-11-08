@@ -29,7 +29,7 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package' 
             }
         }
-        stage('Build to Docker') {
+        stage('Deploying to Dockerhub') {
             agent{
                 docker {
                     image 'docker'
@@ -38,20 +38,9 @@ pipeline {
                     args '-w /app'
                 }
             }
-            // steps{
-            //     sh 'docker image build -t $registry:$BUILD_NUMBER .'
-            // }
-            steps{
-                dockerImage = docker.build("monishavasu/my-react-app:latest")
-            }
-        }
-        stage('Deploying to Dockerhub') {
-            agent{
-                docker {
-                    image 'docker'
-                    args '-u root:root'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                    args '-w /app'
+            stage('Build to Docker') {
+                steps{
+                    sh 'docker image build -t $registry:$BUILD_NUMBER .'
                 }
             }
             steps{
