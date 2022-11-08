@@ -30,14 +30,14 @@ pipeline {
             }
         }
         stage('Deploying to Dockerhub') {
-            agent{
-                docker {
-                    image 'mmiotkug/node-curl'
-                    args '-p 3000:3000'
-                    args '-w /app'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
+            // agent{
+            //     docker {
+            //         image 'mmiotkug/node-curl'
+            //         args '-p 3000:3000'
+            //         args '-w /app'
+            //         args '-v /var/run/docker.sock:/var/run/docker.sock'
+            //     }
+            // }
             stages {
                 stage('Build to container') {
                     steps{
