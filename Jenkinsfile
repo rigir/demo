@@ -42,7 +42,6 @@ pipeline {
                 sh 'docker image build -t $registry:$BUILD_NUMBER .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u rigir --password-stdin'
                 sh 'docker image push $registry:$BUILD_NUMBER'
-                sh 'docker logout'
                 sh 'docker image rm $registry:$BUILD_NUMBER'
             }
             post {
