@@ -4,7 +4,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('docker-login-pwd')
     }
     agent {
-        maven {
+        docker {
             image 'maven:3.8.6-amazoncorretto-17'
             args '-u root:root'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
