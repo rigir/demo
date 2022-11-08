@@ -32,7 +32,7 @@ pipeline {
             }
             steps{
                 script {
-                    docker.withRegistry( 'https://hub.docker.com/', DOCKERHUB_CREDENTIALS ) {
+                    docker.withRegistry( 'https://hub.docker.com/', $DOCKERHUB_CREDENTIALS ) {
                         docker.image("${registry}:latest").push()
                     }
                 }
