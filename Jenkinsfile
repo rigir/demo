@@ -3,6 +3,7 @@ pipeline {
         registry = 'rigir/lab5_03'
         DOCKERHUB_CREDENTIALS = credentials('docker-login-pwd')
     }
+    agent none
     options {
         skipStagesAfterUnstable()
     }
