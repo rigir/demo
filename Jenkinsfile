@@ -26,11 +26,11 @@ pipeline {
             }
         }
         stage('Deploying to Dockerhub') {
-            steps{
-                environment {
+            environment {
                     registry = "rigir/lab5_03"
                     DOCKERHUB_CREDENTIALS = 'docker-login-pwd'
-                }
+            }
+            steps{
                 script {
                     docker.withRegistry( 'https://hub.docker.com/', DOCKERHUB_CREDENTIALS ) {
                         docker.image("${registry}:latest").push()
