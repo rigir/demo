@@ -28,7 +28,7 @@ pipeline {
         stage('Deploying to Dockerhub') {
             environment {
                     registry = "rigir/lab5_03"
-                    DOCKERHUB_CREDENTIALS = 'docker-login-pwd'
+                    DOCKERHUB_CREDENTIALS = credentials('docker-login-pwd')
             }
             steps{
                 script {
