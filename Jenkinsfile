@@ -30,27 +30,21 @@ pipeline {
             }
         }
         stage('Build to Docker') {
-            // steps{
-            //     sh 'docker image build -t $registry:$BUILD_NUMBER .'
-            // }
             steps{
-                dockerImage = docker.build("monishavasu/my-react-app:latest")
+                sh 'docker image build -t $registry:$BUILD_NUMBER .'
             }
         }
         stage('Deploying to Dockerhub') {
             steps{
-                // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u rigir --password-stdin'
-                // sh 'docker image push $registry:$BUILD_NUMBER'
-                // sh "docker image rm $registry:$BUILD_NUMBER"
-                withDockerRegistry([ credentialsId: "docker-login-pwd", url: "" ]) {
-                    dockerImage.push()
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u rigir --password-stdin'
+                sh 'docker image push $registry:$BUILD_NUMBER'
+                sh "docker image rm $registry:$BUILD_NUMBER"
+            }
+            post {
+                always {
+                    sh 'docker logout'
                 }
             }
-            // post {
-            //     always {
-            //         sh 'docker logout'
-            //     }
-            // }
         }
     }
 }
