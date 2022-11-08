@@ -1,4 +1,8 @@
 pipeline {
+    environment {
+        registry = "rigir/lab5_03"
+        DOCKERHUB_CREDENTIALS = credentials('docker-login-pwd')
+    }
     agent {
         docker {
             image 'maven:3.8.6-amazoncorretto-17'
@@ -26,10 +30,6 @@ pipeline {
             }
         }
         stage('Deploying to Dockerhub') {
-            environment {
-                    registry = "rigir/lab5_03"
-                    DOCKERHUB_CREDENTIALS = credentials('docker-login-pwd')
-            }
             steps{
                 script {
                     docker.withRegistry( 'https://hub.docker.com/', $DOCKERHUB_CREDENTIALS ) {
