@@ -91,7 +91,4 @@ public class PointControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"x\":1,\"y\":2}"));
     }
-
-
-
 }

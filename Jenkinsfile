@@ -25,14 +25,17 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package' 
             }
         }
-        stage('Deploy to Staging') {
-            steps {
-                echo 'Deploying to Staging'
-            }
-        }
-        stage('Deploy to Production') {
-            steps {
-                echo 'Deploying to Production'
+        stage('Deploying to Dockerhub') {
+            steps{
+                environment {
+                    registry = "rigir/lab5_03"
+                    DOCKERHUB_CREDENTIALS = 'docker-login-pwd'
+                }
+                script {
+                    docker.withRegistry( 'https://hub.docker.com/', DOCKERHUB_CREDENTIALS ) {
+                        docker.image("${registry}:latest").push()
+                    }
+                }
             }
         }
     }
