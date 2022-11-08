@@ -38,24 +38,25 @@ pipeline {
                     args '-w /app'
                 }
             }
-            stage('Build to Docker') {
-                steps{
-                    sh 'docker image build -t $registry:$BUILD_NUMBER .'
+            stages {
+                stage('Build to container') {
+                    steps{
+                        sh 'docker image build -t $registry:$BUILD_NUMBER .'
+                    }
                 }
-            }
-            steps{
-                echo 'Deploying to docker hub'
-                script {
-                    docker.withRegistry( 'https://hub.docker.com/', DOCKERHUB_CREDENTIALS ) {
-                        dockerImage.push()
+                stage('Deploy container') {
+                    steps{
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u rigir --password-stdin'
+                        sh 'docker image push $registry:$BUILD_NUMBER'
+                        sh "docker image rm $registry:$BUILD_NUMBER"
+                    }
+                    post {
+                        always {
+                            sh 'docker logout'
+                        }
                     }
                 }
             }
-            // post {
-            //     always {
-            //         sh 'docker logout'
-            //     }
-            // }
         }
     }
 }
