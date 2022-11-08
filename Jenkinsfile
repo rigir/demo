@@ -34,6 +34,7 @@ pipeline {
                 docker {
                     image 'mmiotkug/node-curl'
                     args '-p 3000:3000'
+                    args '-w /app'
                     args '-v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -50,11 +51,11 @@ pipeline {
                         sh 'docker logout'
                         sh 'docker image rm $registry:$BUILD_NUMBER'
                     }
-                    // post {
-                    //     always {
-                    //         sh 'docker logout'
-                    //     }
-                    // }
+                    post {
+                        always {
+                            sh 'docker logout'
+                        }
+                    }
                 }
             }
         }
